@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ApicallingLearnings</string>
+    <string name="apiKey">dee3f096ee07460a99017b80395b3902</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <!--    <string name="title_activity_maps">MapsActivity</string>-->
+</resources>

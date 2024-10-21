@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SourceScreen">
+
+    <TextView
+        android:id="@+id/tvSearchTerm"
+        android:fontFamily="@font/poppins"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Search term"
+        android:layout_marginHorizontal="5dp"
+        android:paddingVertical="5dp"/>
+
+    <!-- Category Spinner -->
+    <Spinner
+        android:gravity="center"
+        android:id="@+id/categorySpinner"
+        android:fontFamily="@font/poppins"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- RecyclerView for displaying the news articles -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnSkip"
+        android:layout_width="match_parent"
+        android:fontFamily="@font/poppins"
+
+        android:layout_height="wrap_content"
+        android:text="SKIP(SEARCH ALL SOURCES)"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/black"
+        android:layout_marginVertical="8dp"/>
+</LinearLayout>
+
