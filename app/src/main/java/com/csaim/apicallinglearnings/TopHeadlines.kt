@@ -1,6 +1,5 @@
 package com.csaim.apicallinglearnings
 
-import android.R
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -17,19 +16,24 @@ class TopHeadlines : AppCompatActivity() {
     private lateinit var binding: ActivityTopHeadlinesBinding
     private lateinit var topHeadlinesManager: TopHeadlinesManager
 
+    private var currentPage=1
+    private val itemsPerPage=6
+    private var totalPages = 4
+    private var allTopHeadlinesData: List<TopHeadlinesData> = listOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityTopHeadlinesBinding.inflate(layoutInflater)
+        binding = ActivityTopHeadlinesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = "Top Headlines"
+
         topHeadlinesManager = TopHeadlinesManager()
+        binding.progressBar.visibility = View.VISIBLE
+        val apiKey = getString(com.csaim.apicallinglearnings.R.string.apiKey)
 
-        val apiKey=getString(com.csaim.apicallinglearnings.R.string.apiKey)
-        val category="sports"
-
-        // Setup Spinner with categories
-        val categories = listOf("Sports", "Technology", "Business", "Entertainment","Health", "Science","General")
-        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, categories)
+        val categories = listOf("Sports","Technology","Business","Entertainment","Health","Science","General")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerCategories.adapter = adapter
 
@@ -40,36 +44,67 @@ class TopHeadlines : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Handle case when nothing is selected (if needed)
             }
         }
 
-        //implementing the recyc view
-        val newsManager = TopHeadlinesManager()
-        var topHeadlinesData = listOf<TopHeadlinesData>()
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                // Retrieve the news articles
-                topHeadlinesData = newsManager.retrieveNews(apiKey, category)
+        binding.buttonPrevious.setOnClickListener {
+            if (currentPage>1) {
+                currentPage--
+                displayNewsPage()
             }
-
-            // Once filtering is done, set the adapter and layout manager
-            val topHeadlineAdapter = TopHeadlineAdapter(topHeadlinesData)
-            binding.recyclerView.layoutManager = LinearLayoutManager(this@TopHeadlines)
-            binding.recyclerView.adapter = topHeadlineAdapter
         }
 
+        binding.buttonNext.setOnClickListener {
+            if (currentPage<totalPages) {
+                currentPage++
+                displayNewsPage()
+            }
+        }
     }
+
+
 
     private fun fetchNews(apiKey: String, category: String) {
         lifecycleScope.launch {
             val news = withContext(Dispatchers.IO) {
-                // Update the API URL dynamically based on the category
                 topHeadlinesManager.retrieveNews(apiKey, category)
             }
-            // Set the adapter with the newly fetched news
-            val topHeadlineAdapter = TopHeadlineAdapter(news) // Assuming you have a NewsAdapter
-            binding.recyclerView.adapter = topHeadlineAdapter
+
+            val filteredNewsData = news.filter {
+                it.newsTitle!="[Removed]"&& it.newsDescription!="[Removed]"&& !it.newsIcon.isNullOrEmpty()
+            }
+
+            allTopHeadlinesData = filteredNewsData
+            totalPages=(allTopHeadlinesData.size+itemsPerPage-1)/itemsPerPage
+            currentPage=1
+
+
+            displayNewsPage()
+        }
+
+    }
+    private fun displayNewsPage() {
+        val startIndex=(currentPage-1)*itemsPerPage
+        val endIndex=minOf(startIndex+itemsPerPage,allTopHeadlinesData.size)
+
+        val currentData=allTopHeadlinesData.subList(startIndex, endIndex)
+        val topHeadlineAdapter=TopHeadlineAdapter(currentData)
+        binding.recyclerView.layoutManager=LinearLayoutManager(this@TopHeadlines)
+        binding.recyclerView.adapter = topHeadlineAdapter
+
+        binding.buttonPrevious.isEnabled=currentPage>1
+        binding.buttonNext.isEnabled=currentPage<totalPages
+
+
+
+        binding.progressBar.visibility=View.GONE
+
+        binding.textViewPageIndicator.text = "Page $currentPage/$totalPages"
+
+        if (totalPages>1){
+            binding.textViewPageIndicator.visibility = View.VISIBLE
+        } else {
+            binding.textViewPageIndicator.visibility = View.GONE
         }
     }
 }

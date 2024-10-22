@@ -13,11 +13,11 @@
         android:paddingTop="16dp"
         android:fontFamily="@font/poppins"
         android:gravity="center"
-        android:background="@color/green"
 
         android:paddingBottom="4dp"
+        android:layout_gravity="center"
         android:id="@+id/spinnerCategories"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
@@ -27,11 +27,63 @@
         android:layout_marginVertical="2dp"
         android:layout_marginHorizontal="10dp"
         android:background="#009688"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:id="@+id/recyclerView"
         />
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins"
+
+            android:layout_marginHorizontal="5dp"
+            android:text="Previous"
+            android:enabled="false" />
+        <TextView
+            android:id="@+id/textViewPageIndicator"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginHorizontal="5dp"
+            android:fontFamily="@font/poppins"
+
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Page 1/4"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+
+
+        <Button
+            android:id="@+id/buttonNext"
+            android:layout_width="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:fontFamily="@font/poppins"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:text="Next" />
+    </LinearLayout>
+
 
 </LinearLayout>

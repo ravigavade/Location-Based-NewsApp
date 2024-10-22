@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">ApicallingLearnings</string>
-    <string name="apiKey">dee3f096ee07460a99017b80395b3902</string>
+    <string name="app_name">NewsApp</string>
+    <string name="apiKey">8521b60bf5e2413f8a649f388cec1a07</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="news_by_location">News By location</string>
+    <string name="view_map">View Map</string>
+    <string name="top_headlines">Top Headlines</string>
+    <string name="top_headline">Top Headline</string>
+    <string name="term_search">Term Search</string>
+    <string name="search_by_term">Search by Term</string>
     <!--    <string name="title_activity_maps">MapsActivity</string>-->
 </resources>

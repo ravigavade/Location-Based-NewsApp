@@ -17,11 +17,11 @@ class AllSourceScreenManager {
         builder.addInterceptor(loggingInterceptor)
         okHttpClient=builder.build()
     }
-    suspend fun retrieveSourceNews(apikey:String): List<AllSourcesScreenData>
+    suspend fun retrieveSourceNews(apikey:String,q:String): List<AllSourcesScreenData>
     {
         val request= Request.Builder()
 //            .url("https://newsapi.org/v2/sources?q=hockey&category=$category&language=en")
-            .url("https://newsapi.org/v2/top-headlines?language=en")
+            .url("https://newsapi.org/v2/everything?language=en&q=$q")
             .header("authorization","Bearer $apikey")
             .get()
             .build()

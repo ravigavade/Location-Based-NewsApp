@@ -27,11 +27,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tvNews.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(s:CharSequence?,start:Int,count:Int,after:Int) {
                 //
             }
-            //main thing as of 1st submission
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s:CharSequence?,start:Int,before:Int,count:Int) {
                 binding.btnSearch.isEnabled=!s.isNullOrEmpty()
             }
             override fun afterTextChanged(s: Editable?) {

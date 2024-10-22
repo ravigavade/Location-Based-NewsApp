@@ -32,6 +32,8 @@ class SourceScreen : AppCompatActivity() {
         binding=ActivitySourceScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.progressBar.visibility=View.VISIBLE
+
         sourceScreenManager=SourceScreenManager()
 
         val apiKey=getString(com.csaim.apicallinglearnings.R.string.apiKey)
@@ -39,10 +41,10 @@ class SourceScreen : AppCompatActivity() {
         val keyword=binding.tvSearchTerm.getText().toString().trim()
         val searchedSource=intent.getStringExtra("passSearch")
 
-        binding.tvSearchTerm.text=searchedSource
+//        binding.tvSearchTerm.text=searchedSource
+        supportActionBar?.title = "Search for $searchedSource"
 
-        // Setup Spinner with categories
-        val categories = listOf("Sports", "Technology", "Business", "Entertainment","Health", "Science","General")
+        val categories = listOf("Sports","Technology","Business","Entertainment","Health","Science","General")
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categorySpinner.adapter = adapter
@@ -54,7 +56,7 @@ class SourceScreen : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Handle case when nothing is selected (if needed)
+                //
             }
         }
 
@@ -62,27 +64,35 @@ class SourceScreen : AppCompatActivity() {
         val sourceManage=SourceScreenManager()
         var sourceData= listOf<SourceScreenData>()
         lifecycleScope.launch {
-            withContext(Dispatchers.IO){
-                sourceData=sourceManage.retrieveSources(apiKey,keyword,category)
+            // Fetch source data in the background
+            withContext(Dispatchers.IO) {
+                sourceData = sourceManage.retrieveSources(apiKey,keyword,category)
             }
-            val sourceAdapter=SourceScreenAdapter(sourceData)
-            binding.recyclerView.layoutManager= LinearLayoutManager(this@SourceScreen)
-            binding.recyclerView.adapter=sourceAdapter
+
+            val filteredSourceData = sourceData.filter {
+                it.sourceName!="[Removed]"&& it.sourceDescription!="[Removed]"&& !it.sourceUrl.isNullOrEmpty()
+            }
+
+            // Create a new adapter with the filtered data
+            val sourceAdapter = SourceScreenAdapter(filteredSourceData)
+            binding.recyclerView.layoutManager = LinearLayoutManager(this@SourceScreen)
+            binding.recyclerView.adapter = sourceAdapter
         }
+
         binding.btnSkip.setOnClickListener {
-            startActivity(Intent(this,AllSourcesScreen::class.java))
+            startActivity(Intent(this,AllSourcesScreen::class.java).putExtra("passSearch",searchedSource))
         }
     }
 
     private fun fetchNews(apiKey: String, keyword:String, category: String) {
         lifecycleScope.launch {
             val source = withContext(Dispatchers.IO) {
-                // Update the API URL dynamically based on the category
                 sourceScreenManager.retrieveSources(apiKey,keyword, category)
             }
-            // Set the adapter with the newly fetched news
-            val sourceScreenAdapter = SourceScreenAdapter(source) // Assuming you have a NewsAdapter
+            val sourceScreenAdapter = SourceScreenAdapter(source)
             binding.recyclerView.adapter = sourceScreenAdapter
+            binding.progressBar.visibility=View.GONE
+
         }
     }
 

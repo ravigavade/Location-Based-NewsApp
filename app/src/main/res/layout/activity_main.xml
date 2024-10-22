@@ -5,37 +5,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="#CCCACA"
+    android:background="#DFDFDF"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="9dp"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/tvNews"
-            android:layout_weight="1"
-            android:fontFamily="@font/poppins"
+        android:background="@drawable/border"
+        android:layout_marginHorizontal="10dp"
 
-            android:layout_marginEnd="8dp"
-            android:paddingHorizontal="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:hint="Term Search"/>
-        <Button
-            android:id="@+id/btnSearch"
-            android:text="Search"
-            android:enabled="false"
-            android:fontFamily="@font/poppins"
+        android:orientation="vertical">
 
-            android:layout_marginHorizontal="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+        <TextView
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_by_term"
+            android:fontFamily="@font/poppins"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="9dp"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/tvNews"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins"
+
+                android:layout_marginEnd="8dp"
+                android:paddingHorizontal="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="@string/term_search"/>
+            <Button
+                android:id="@+id/btnSearch"
+                android:text="Search"
+                android:enabled="false"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
     </LinearLayout>
+
+
 
 
     <LinearLayout
@@ -56,11 +79,11 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_height="wrap_content"
-                android:text="News By location"/>
+                android:text="@string/news_by_location"/>
 
         <Button
             android:id="@+id/btnLocalNews"
-            android:text="View Map"
+            android:text="@string/view_map"
             android:backgroundTint="@color/black"
             android:fontFamily="@font/poppins"
 
@@ -74,7 +97,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-
             android:layout_margin="9dp"
             android:orientation="vertical">
             <TextView
@@ -83,13 +105,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:textStyle="bold"
-                android:text="Top Headlines"/>
+                android:text="@string/top_headlines"/>
 
 
 
             <Button
                 android:id="@+id/btnTopNews"
-                android:text="Top Headline"
+                android:text="@string/top_headline"
                 android:gravity="center"
                 android:backgroundTint="@color/black"
                 android:layout_marginLeft="8dp"

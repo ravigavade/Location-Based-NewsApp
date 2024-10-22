@@ -12,7 +12,7 @@
     <TextView
         android:id="@+id/tvSearchTerm"
         android:fontFamily="@font/poppins"
-
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -29,6 +29,20 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="2dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="#009688"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
         />
 
     <!-- RecyclerView for displaying the news articles -->

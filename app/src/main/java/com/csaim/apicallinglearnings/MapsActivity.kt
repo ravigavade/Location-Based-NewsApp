@@ -40,7 +40,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        supportActionBar?.title = "News by Location"
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -61,6 +62,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mMap.setOnMapLongClickListener { latLng ->
             Log.d("mmmmmmmmmmap", "long clicked at ${latLng.latitude}, ${latLng.longitude}")
+            binding.progressBar.visibility=View.VISIBLE
+
 
             lifecycleScope.launch {
                 val addresses=getAddressesFromLocation(
@@ -83,24 +86,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     val newsManager=MapsManager()
                     var news= listOf<MapsData>()
                     lifecycleScope.launch {
-                        withContext(IO) {
-                            news = newsManager.retrieveNEWS(apikey, state)
+                        val news = withContext(IO) {
+                            newsManager.retrieveNEWS(apikey, state)
                         }
-                        Log.d("NewsAPI", "Fetched news: ${news.size} items") // Log the news size
 
-                        // Ensure news is populated before setting the adapter
-                        if (news.isNotEmpty()) {
-                            val adapter = MapsAdapter(news)
-                            binding.newsRecyclerView.layoutManager = LinearLayoutManager(this@MapsActivity,LinearLayoutManager.HORIZONTAL, false)
+                        // Log the size of fetched news
+                        Log.d("NewsAPI", "Fetched news: ${news.size} items")
+
+                        val filteredNewsData = news.filter {
+                            it.newsTitle!="[Removed]"&& it.newsDescription!="[Removed]"&& !it.newsIcon.isNullOrEmpty()
+                        }
+
+                        // Ensure filtered news is populated before setting the adapter
+                        if (filteredNewsData.isNotEmpty()) {
+                            val adapter = MapsAdapter(filteredNewsData)
+                            binding.newsRecyclerView.layoutManager = LinearLayoutManager(this@MapsActivity, LinearLayoutManager.HORIZONTAL, false)
                             binding.newsRecyclerView.adapter = adapter
-                            binding.newsRecyclerView.visibility = RecyclerView.VISIBLE // Make sure it's visible
+                            binding.newsRecyclerView.visibility = RecyclerView.VISIBLE
                             binding.newsTitleTextView.visibility = View.VISIBLE
-                            binding.newsTitleTextView.text="Results for $state"
+                            binding.newsTitleTextView.text = "Results for $state"
+
+                            binding.progressBar.visibility = View.GONE
                         } else {
-                            Log.d("NewsAPI", "No news data returned")
+                            Log.d("NewsAPI", "No valid news data returned")
                             Toast.makeText(this@MapsActivity, "No news available", Toast.LENGTH_SHORT).show()
                         }
                     }
+
 
 
                 }

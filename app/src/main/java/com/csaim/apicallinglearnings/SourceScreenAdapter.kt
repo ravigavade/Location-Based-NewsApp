@@ -1,5 +1,7 @@
 package com.csaim.apicallinglearnings
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,5 +29,14 @@ class SourceScreenAdapter(val sourceScreenData:List<SourceScreenData>):RecyclerV
         val currentSource=sourceScreenData[position]
         holder.title.text=currentSource.sourceName
         holder.description.text=currentSource.sourceDescription
+
+        val url=currentSource.sourceUrl
+        val sourceContext=holder.itemView.context
+
+        holder.itemView.setOnClickListener{
+            val intent= Intent(Intent.ACTION_VIEW)
+            intent.data= Uri.parse(url)
+            sourceContext.startActivity(intent)
+        }
     }
 }

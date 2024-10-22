@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Class Project 1" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/VibeVerse" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/class HW/class 2 HW subway app" vcs="Git" />

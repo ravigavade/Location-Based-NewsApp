@@ -40,12 +40,13 @@ class SourceScreenManager {
 
                 val name=currentSource.getString("name")
                 val description=currentSource.getString("description")
-//                val url=currentSource.getString("url")
+                val url=currentSource.getString("url")
 
                 Log.d("Sources","the source is $source")
                 val sourceScreenData=SourceScreenData(
                     sourceName = name,
                     sourceDescription = description,
+                    sourceUrl = url
                 )
                 sourceScreenDataList.add(sourceScreenData)
             }

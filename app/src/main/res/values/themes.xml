@@ -1,9 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ApicallingLearnings" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.ApicallingLearnings" parent="Theme.MaterialComponents.DayNight">
+        <!-- Customize your theme here -->
     </style>
 
-    <style name="Theme.ApicallingLearnings" parent="Base.Theme.ApicallingLearnings" />
+
 </resources>

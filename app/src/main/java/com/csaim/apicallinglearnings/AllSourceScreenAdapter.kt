@@ -12,16 +12,16 @@ import com.squareup.picasso.Picasso
 
 class AllSourceScreenAdapter(val allSourceData: List<AllSourcesScreenData>): RecyclerView.Adapter<AllSourceScreenAdapter.ViewHolder>() {
     class ViewHolder(rootLayout: View): RecyclerView.ViewHolder(rootLayout){
-        val title: TextView =rootLayout.findViewById(R.id.title)
-        val description: TextView =rootLayout.findViewById(R.id.description)
-        val icon: ImageView =rootLayout.findViewById(R.id.icon)
+        val title: TextView=rootLayout.findViewById(R.id.title)
+        val description:TextView=rootLayout.findViewById(R.id.description)
+        val icon: ImageView=rootLayout.findViewById(R.id.icon)
         val author:TextView=rootLayout.findViewById(R.id.author)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val rootLayout: View =layoutInflater.inflate(R.layout.allsources_item_layout, parent, false)
-        val viewHolder= ViewHolder(rootLayout)
+        val layoutInflater:LayoutInflater = LayoutInflater.from(parent.context)
+        val rootLayout:View=layoutInflater.inflate(R.layout.allsources_item_layout, parent, false)
+        val viewHolder=ViewHolder(rootLayout)
         return viewHolder
     }
 
@@ -47,7 +47,7 @@ class AllSourceScreenAdapter(val allSourceData: List<AllSourcesScreenData>): Rec
 
 
         holder.itemView.setOnClickListener{
-            val intent= Intent(Intent.ACTION_VIEW)
+            val intent=Intent(Intent.ACTION_VIEW)
             intent.data= Uri.parse(url)
             newsContext.startActivity(intent)
 

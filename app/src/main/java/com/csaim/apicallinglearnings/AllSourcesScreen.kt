@@ -1,6 +1,7 @@
 package com.csaim.apicallinglearnings
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,37 +19,42 @@ class AllSourcesScreen : AppCompatActivity() {
         binding = ActivityAllSourcesScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.progressBar.visibility=View.VISIBLE
+
+
+        val results=intent.getStringExtra("passSearch")
+        supportActionBar?.title = "All Results for $results"
+
         setupRecyclerView()
         fetchAndDisplayNews()
     }
 
-    // Setup RecyclerView with the TopHeadlineAdapter
     private fun setupRecyclerView() {
-        binding.recyclerView.layoutManager = LinearLayoutManager(this) // Set layout manager
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-    // Fetch data using TopHeadlinesManager and update RecyclerView
     private fun fetchAndDisplayNews() {
-        val apiKey = getString(R.string.apiKey) // Your API key
+        val apiKey = getString(R.string.apiKey)
 
         val allSourceNewsManager = AllSourceScreenManager()
         var allSourceData = listOf<AllSourcesScreenData>()
+        val searchedSource=intent.getStringExtra("passSearch")
+        val q=searchedSource.toString()
 
         lifecycleScope.launch {
+
             withContext(Dispatchers.IO) {
-                allSourceData = allSourceNewsManager.retrieveSourceNews(apiKey)
+                allSourceData = allSourceNewsManager.retrieveSourceNews(apiKey,q)
             }
-
-            // Filter out "removed" or null news items
             val filteredNewsData = allSourceData.filter {
-                it.newsTitle != "[Removed]" && it.newsDescription != "[Removed]" && !it.newsIcon.isNullOrEmpty()
+                it.newsTitle!="[Removed]"&& it.newsDescription!="[Removed]"&& !it.newsIcon.isNullOrEmpty()
             }
 
-            // Create a new adapter with the filtered data
-            val SourceNewsAdapter = AllSourceScreenAdapter(filteredNewsData)
+            val SourceNewsAdapter=AllSourceScreenAdapter(filteredNewsData)
 
-            // Update RecyclerView with the new adapter
             binding.recyclerView.adapter = SourceNewsAdapter
+            binding.progressBar.visibility= View.GONE
+
         }
     }
 }
