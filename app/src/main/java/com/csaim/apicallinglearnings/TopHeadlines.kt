@@ -96,7 +96,7 @@ class TopHeadlines : AppCompatActivity() {
         binding.buttonNext.isEnabled=currentPage<totalPages
 
 
-
+//
         binding.progressBar.visibility=View.GONE
 
         binding.textViewPageIndicator.text = "Page $currentPage/$totalPages"
