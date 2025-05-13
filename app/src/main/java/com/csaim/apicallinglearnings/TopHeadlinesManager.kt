@@ -21,7 +21,6 @@ class TopHeadlinesManager {
     suspend fun retrieveNews(apikey:String,category: String): List<TopHeadlinesData>
     {
         val request= Request.Builder()
-//            .url("https://newsapi.org/v2/sources?q=hockey&category=$category&language=en")
             .url("https://newsapi.org/v2/top-headlines?country=us&category=$category")
             .header("authorization","Bearer $apikey")
             .get()
